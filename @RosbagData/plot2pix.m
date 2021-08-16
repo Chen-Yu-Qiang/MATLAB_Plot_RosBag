@@ -28,7 +28,9 @@ function output = plot2pix(self,plotobj)
         xlabel(plotobj(1).xlabel+"("+plotobj(1).xUnit+")")
     end
     ylabel("Horizontal("+plotobj(1).yUnit+")")
-    legend(legendlist,'Location','best')
+    [~,Leg]=legend(legendlist,'Location','best')
+    objhl = findobj(Leg, 'type', 'line')
+    set(objhl, 'Markersize', 15);
     grid on
     ylim([0 960])
     subplot(3,1,2)

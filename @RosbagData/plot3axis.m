@@ -24,7 +24,9 @@ function output = plot3axis(self,plotobj)
         xlabel(plotobj(1).xlabel+"("+plotobj(1).xUnit+")")
     end
     ylabel("X("+plotobj(1).yUnit+")")
-    legend(legendlist)
+    [~,Leg]=legend(legendlist)
+    objhl = findobj(Leg, 'type', 'line')
+    set(objhl, 'Markersize', 15);
     grid on
     subplot(3,1,2)
     xlim([self.tmin,self.tmax])
