@@ -37,7 +37,9 @@ function output = plot3axisWAng(self,plotobj,plogangobj)
         xlabel(plotobj(1).xlabel+"("+plotobj(1).xUnit+")")
     end
     ylabel("X("+plotobj(1).yUnit+")")
-    legend(legendlist,'Location','best')
+    [~,Leg]=legend(legendlist,'Location','best')
+    objhl = findobj(Leg, 'type', 'line')
+    set(objhl, 'Markersize', 15);
     grid on
     subplot(4,1,2)
     xlim([self.tmin,self.tmax])
