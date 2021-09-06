@@ -30,4 +30,9 @@ function adataObj = get_topic(self,msgType,msgName)
         adataObj.topicName=msgName;
         adataObj.readFromFloat32(self);
     end
+    if msgType=="Float32Array"
+        adataObj=ArrayData();
+        adataObj.topicName=msgName;
+        adataObj.readFromFloat32Array(self);
+    end
 end
