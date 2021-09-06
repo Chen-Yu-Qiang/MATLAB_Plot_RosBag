@@ -15,6 +15,11 @@ function adataObj = get_topic(self,msgType,msgName)
         adataObj.topicName=msgName;
         adataObj.readFromGeom_Twist(self);
     end
+    if msgType=="Geom_Twist_Ref_from"
+        adataObj=AData();
+        adataObj.topicName=msgName;
+        adataObj.readFromGeom_Twist_Ref_from(self);
+    end
     if msgType=="Geom_Point"
         adataObj=AData();
         adataObj.topicName=msgName;

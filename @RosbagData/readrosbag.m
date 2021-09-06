@@ -19,7 +19,7 @@ function output = readrosbag(self)
     adata_obj = AData();
     adata_obj.topicName = "tello/imu";
     adata_obj.yUnit = "m/s^2";
-    adata_obj.showName = "a_{imu}";
+    adata_obj.showName = "IMU";
     flag = adata_obj.readFromSensor_Imu(self);
     if flag==1
         self.data_obj.a_imu = adata_obj;
@@ -30,7 +30,7 @@ function output = readrosbag(self)
     adata_obj.topicName="tello/cmd_vel";
     adata_obj.yUnit="m/s";
     adata_obj.yUnitAng="deg/s";
-    adata_obj.showName="v_{cmd}";
+    adata_obj.showName="Command(Tello)";
     flag = adata_obj.readFromGeom_Twist(self);
     if flag==1
         temp=adata_obj.x;
@@ -45,7 +45,7 @@ function output = readrosbag(self)
     adata_obj.topicName="v_cmd";
     adata_obj.yUnit="m/s";
     adata_obj.yUnitAng="deg/s";
-    adata_obj.showName="v_{cmd}";
+    adata_obj.showName="Command(World)";
     flag = adata_obj.readFromGeom_Twist(self);
     if flag==1
         adata_obj.sat(1,-1);
@@ -57,7 +57,7 @@ function output = readrosbag(self)
     %% self.get_p_ref();
     adata_obj = AData();
     adata_obj.topicName="ref";
-    adata_obj.showName="p_{ref}";
+    adata_obj.showName="Ref";
     adata_obj.yUnitAng="deg";
     flag = adata_obj.readFromGeom_Twist(self);
     if flag==1
@@ -72,7 +72,7 @@ function output = readrosbag(self)
     %% self.get_p_kf();
     adata_obj = AData();
     adata_obj.topicName="from_kf";
-    adata_obj.showName="p_{kf}";
+    adata_obj.showName="KF";
     adata_obj.yUnitAng="deg";
     flag = adata_obj.readFromGeom_Twist(self);
     if flag==1
@@ -86,7 +86,7 @@ function output = readrosbag(self)
     %% self.get_p_imu();
     adata_obj = AData();
     adata_obj.topicName="from_IMU";
-    adata_obj.showName="p_{imu}";
+    adata_obj.showName="IMU";
     flag = adata_obj.readFromGeom_PoseStamped(self);
     if flag==1
         for i=1:length(adata_obj.x)
@@ -100,7 +100,7 @@ function output = readrosbag(self)
     %% self.get_p_pad();
     adata_obj = AData();
     adata_obj.topicName="from_box_merge";
-    adata_obj.showName="p_{pad}";
+    adata_obj.showName="Board";
     adata_obj.ang=0;
     flag = adata_obj.readFromGeom_Twist(self);
     if flag==1
@@ -120,7 +120,7 @@ function output = readrosbag(self)
     adata_obj.topicName="v_kf";
     adata_obj.yUnit="m/s";
     adata_obj.yUnitAng="deg";
-    adata_obj.showName="v_{kf}";
+    adata_obj.showName="KF";
     flag = adata_obj.readFromGeom_Twist(self);
     if flag==1
         self.data_obj.v_kf = adata_obj;
@@ -130,7 +130,7 @@ function output = readrosbag(self)
     adata_obj = AData();   
     adata_obj.topicName="tello/odom";
     adata_obj.yUnit="m/s";
-    adata_obj.showName="v_{imu}";
+    adata_obj.showName="IMU";
     flag = adata_obj.readFromNav_Odom(self);
     if flag==1
         for i=1:length(adata_obj.th)
@@ -143,7 +143,7 @@ function output = readrosbag(self)
     adata_obj = AData();   
     adata_obj.topicName="tello/odom";
     adata_obj.yUnit="m/s";
-    adata_obj.showName="p_{odom}";
+    adata_obj.showName="ODOM";
     flag = adata_obj.readFromNav_Odom_pos(self);
     if flag==1
         for i=1:length(adata_obj.x)
@@ -159,7 +159,7 @@ function output = readrosbag(self)
     adata_obj.topicName="kf_vmean";
     adata_obj.yUnit="m/s";
     adata_obj.yUnitAng="deg";
-    adata_obj.showName="v_{kf,mean}";
+    adata_obj.showName="KF,mean";
     flag = adata_obj.readFromGeom_Twist(self);
     if flag==1
         self.data_obj.v_kf_mean = adata_obj;
@@ -169,7 +169,7 @@ function output = readrosbag(self)
     adata_obj = AData();   
     adata_obj.topicName="tello/odom";
     adata_obj.yUnitAng="deg";
-    adata_obj.showName="\theta_{imu}";
+    adata_obj.showName="IMU";
     flag = adata_obj.readFromNav_Odom(self);
     if flag==1
         for i=1:length(adata_obj.z)
@@ -202,7 +202,7 @@ function output = readrosbag(self)
     adata_obj = AData();   
     adata_obj.topicName="from_img_ang2";
     adata_obj.yUnitAng="deg";
-    adata_obj.showName="\theta_{imu}";
+    adata_obj.showName="IMU";
     flag = adata_obj.readFromFloat32(self);
     if flag==1
         for i=1:length(adata_obj.z)
@@ -220,7 +220,7 @@ function output = readrosbag(self)
     adata_obj = AData();   
     adata_obj.topicName="tello/imu";
     adata_obj.yUnitAng="deg/s";
-    adata_obj.showName="\omega_{imu}";
+    adata_obj.showName="IMU";
     flag = adata_obj.readFromSensor_Imu(self);
     if flag==1
         for i=1:length(adata_obj.z)

@@ -19,6 +19,7 @@ classdef AData < handle
    end
    methods
       output = readFromGeom_Twist(obj,father)
+      output = readFromGeom_Twist_Ref_from(obj,father)
       output = readFromNav_Odom(obj,father)
       output = readFromNav_Odom_pos(obj,father)
       output = readFromSensor_Imu(obj,father)
