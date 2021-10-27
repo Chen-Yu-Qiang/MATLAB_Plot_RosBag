@@ -2,7 +2,9 @@ function output = isHaveMat(self)
     matfile = "";
     D=dir;
     for i=1:length(D)
-        if length(strfind(D(i).name,self.fileName+".mat"))>0
+        
+        ns=strrep(self.namespace, "/", "_");
+        if length(strfind(D(i).name,ns+self.fileName+".mat"))>0
             matfile=D(i).name(1:end-4);
         end
     end

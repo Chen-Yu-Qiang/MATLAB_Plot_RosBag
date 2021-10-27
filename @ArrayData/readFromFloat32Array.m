@@ -13,7 +13,7 @@ function output = readFromFloat32Array(obj,father)
         ang=obj.ang;
         theta=[];
         for i=1:length(msg)      
-            obj.Data(:,i)=msg{1}.Data(:,1);
+            obj.Data(:,i)=msg{i}.Data(:,1);
         end
 %         str.x=obj.x;
 %         str.y=obj.y;

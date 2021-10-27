@@ -10,6 +10,7 @@ classdef RosbagData < handle
       saveEachmat=0;
       t_takeoff=0;
       data_obj=struct()
+      namespace="";
    end
    methods
 %       output = get_v_cmd(self)

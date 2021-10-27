@@ -4,10 +4,10 @@ function output = readrosbag(self)
   %% set to as takeoff time  
 
     adata_obj = AData();
-    adata_obj.topicName = "tello/imu";
+    adata_obj.topicName = self.namespace+"tello/imu";
     flag = adata_obj.readFromSensor_Imu(self);
     bag=rosbag(self.fileName+".bag");
-    bsel=select(bag,"topic","tello/takeoff");
+    bsel=select(bag,"topic",self.namespace+"tello/takeoff");
     msg=readMessages(bsel,'DataFormat','struct');
     t=timeseries(bsel).Time;
     self.t_takeoff=t(end)-self.t0;
@@ -17,7 +17,7 @@ function output = readrosbag(self)
     %% self.get_a_imu();
     
     adata_obj = AData();
-    adata_obj.topicName = "tello/imu";
+    adata_obj.topicName = self.namespace+"tello/imu";
     adata_obj.yUnit = "m/s^2";
     adata_obj.showName = "IMU";
     flag = adata_obj.readFromSensor_Imu(self);
@@ -27,7 +27,7 @@ function output = readrosbag(self)
     clear adata_obj
     %% self.get_v_cmd();
     adata_obj = AData();
-    adata_obj.topicName="tello/cmd_vel";
+    adata_obj.topicName=self.namespace+"tello/cmd_vel";
     adata_obj.yUnit="m/s";
     adata_obj.yUnitAng="deg/s";
     adata_obj.showName="Command(Tello)";
@@ -42,7 +42,7 @@ function output = readrosbag(self)
     clear adata_obj
     %% self.get_v_cmd();
     adata_obj = AData();
-    adata_obj.topicName="v_cmd";
+    adata_obj.topicName=self.namespace+"v_cmd";
     adata_obj.yUnit="m/s";
     adata_obj.yUnitAng="deg/s";
     adata_obj.showName="Command(World)";
@@ -53,10 +53,23 @@ function output = readrosbag(self)
         self.data_obj.v_cmd = adata_obj;
     end    
     clear adata_obj
-        
+    %% self.get_v_cmd();
+    adata_obj = AData();
+    adata_obj.topicName=self.namespace+"v_cmd2";
+    adata_obj.yUnit="m/s";
+    adata_obj.yUnitAng="deg/s";
+    adata_obj.showName="Command(World)";
+    flag = adata_obj.readFromGeom_Twist(self);
+    if flag==1
+        adata_obj.sat(1,-1);
+        adata_obj.th=-adata_obj.th.*(180/pi);
+        self.data_obj.v_cmd2 = adata_obj;
+    end    
+    clear adata_obj
+                
     %% self.get_p_ref();
     adata_obj = AData();
-    adata_obj.topicName="ref";
+    adata_obj.topicName=self.namespace+"ref";
     adata_obj.showName="Ref";
     adata_obj.yUnitAng="deg";
     flag = adata_obj.readFromGeom_Twist(self);
@@ -71,7 +84,7 @@ function output = readrosbag(self)
     
     %% self.get_p_kf();
     adata_obj = AData();
-    adata_obj.topicName="from_kf";
+    adata_obj.topicName=self.namespace+"from_kf";
     adata_obj.showName="KF";
     adata_obj.yUnitAng="deg";
     flag = adata_obj.readFromGeom_Twist(self);
@@ -85,7 +98,7 @@ function output = readrosbag(self)
     clear adata_obj       
     %% self.get_p_imu();
     adata_obj = AData();
-    adata_obj.topicName="from_IMU";
+    adata_obj.topicName=self.namespace+"from_IMU";
     adata_obj.showName="IMU";
     flag = adata_obj.readFromGeom_PoseStamped(self);
     if flag==1
@@ -99,7 +112,7 @@ function output = readrosbag(self)
     clear adata_obj           
     %% self.get_p_pad();
     adata_obj = AData();
-    adata_obj.topicName="from_box_merge";
+    adata_obj.topicName=self.namespace+"from_box_merge";
     adata_obj.showName="Board";
     adata_obj.ang=0;
     flag = adata_obj.readFromGeom_Twist(self);
@@ -117,7 +130,7 @@ function output = readrosbag(self)
     clear adata_obj         
     %% self.get_v_kf();
     adata_obj = AData();
-    adata_obj.topicName="v_kf";
+    adata_obj.topicName=self.namespace+"v_kf";
     adata_obj.yUnit="m/s";
     adata_obj.yUnitAng="deg";
     adata_obj.showName="KF";
@@ -128,7 +141,7 @@ function output = readrosbag(self)
     clear adata_obj    
     %% self.get_v_imu();
     adata_obj = AData();   
-    adata_obj.topicName="tello/odom";
+    adata_obj.topicName=self.namespace+"tello/odom";
     adata_obj.yUnit="m/s";
     adata_obj.showName="IMU";
     flag = adata_obj.readFromNav_Odom(self);
@@ -141,7 +154,7 @@ function output = readrosbag(self)
     clear adata_obj    
      %% self.get_p_odom();
     adata_obj = AData();   
-    adata_obj.topicName="tello/odom";
+    adata_obj.topicName=self.namespace+"tello/odom";
     adata_obj.yUnit="m/s";
     adata_obj.showName="ODOM";
     flag = adata_obj.readFromNav_Odom_pos(self);
@@ -156,7 +169,7 @@ function output = readrosbag(self)
     clear adata_obj    
     %% self.get_v_kf_mean();
     adata_obj = AData();   
-    adata_obj.topicName="kf_vmean";
+    adata_obj.topicName=self.namespace+"kf_vmean";
     adata_obj.yUnit="m/s";
     adata_obj.yUnitAng="deg";
     adata_obj.showName="KF,mean";
@@ -167,7 +180,7 @@ function output = readrosbag(self)
     clear adata_obj
     %% self.get_ang_imu();
     adata_obj = AData();   
-    adata_obj.topicName="tello/odom";
+    adata_obj.topicName=self.namespace+"tello/odom";
     adata_obj.yUnitAng="deg";
     adata_obj.showName="IMU";
     flag = adata_obj.readFromNav_Odom(self);
@@ -184,7 +197,7 @@ function output = readrosbag(self)
     clear adata_obj        
     %% self.get_ang_imu();
     adata_obj = AData();   
-    adata_obj.topicName="tello/odom";
+    adata_obj.topicName=self.namespace+"tello/odom";
     adata_obj.yUnitAng="deg";
     adata_obj.showName="\theta_{imu}";
     flag = adata_obj.readFromNav_Odom(self);
@@ -200,7 +213,7 @@ function output = readrosbag(self)
     clear adata_obj        
     %% self.get_ang_vp();
     adata_obj = AData();   
-    adata_obj.topicName="from_img_ang2";
+    adata_obj.topicName=self.namespace+"from_img_ang2";
     adata_obj.yUnitAng="deg";
     adata_obj.showName="IMU";
     flag = adata_obj.readFromFloat32(self);
@@ -218,7 +231,7 @@ function output = readrosbag(self)
     
     %% self.get_v_ang_imu();
     adata_obj = AData();   
-    adata_obj.topicName="tello/imu";
+    adata_obj.topicName=self.namespace+"tello/imu";
     adata_obj.yUnitAng="deg/s";
     adata_obj.showName="IMU";
     flag = adata_obj.readFromSensor_Imu(self);
@@ -239,7 +252,7 @@ function output = readrosbag(self)
     
     %%  box in imega
     adata_obj = AData();   
-    adata_obj.topicName="box_in_img_r";
+    adata_obj.topicName=self.namespace+"box_in_img_r";
     adata_obj.yUnit="pix";
     adata_obj.showName="Red";
     flag = adata_obj.readFromGeom_Point(self); 
@@ -247,7 +260,7 @@ function output = readrosbag(self)
     clear adata_obj
     
     adata_obj = AData();   
-    adata_obj.topicName="box_in_img_g";
+    adata_obj.topicName=self.namespace+"box_in_img_g";
     adata_obj.yUnit="pix";
     adata_obj.showName="Green";
     flag = adata_obj.readFromGeom_Point(self); 
@@ -255,7 +268,7 @@ function output = readrosbag(self)
     clear adata_obj
     
     adata_obj = AData();   
-    adata_obj.topicName="box_in_img_b";
+    adata_obj.topicName=self.namespace+"box_in_img_b";
     adata_obj.yUnit="pix";
     adata_obj.showName="Blue";
     flag = adata_obj.readFromGeom_Point(self); 
@@ -264,7 +277,7 @@ function output = readrosbag(self)
     
     %% pid x
     adata_obj = PIDData();   
-    adata_obj.topicName="x_pid";
+    adata_obj.topicName=self.namespace+"x_pid";
     flag = adata_obj.readFromControl_PidState(self);
     if flag==1
         self.data_obj.x_pid = adata_obj;
@@ -272,7 +285,7 @@ function output = readrosbag(self)
     clear adata_obj
     %% pid y
     adata_obj = PIDData();   
-    adata_obj.topicName="y_pid";
+    adata_obj.topicName=self.namespace+"y_pid";
     flag = adata_obj.readFromControl_PidState(self);
     if flag==1
         self.data_obj.y_pid = adata_obj;
@@ -280,7 +293,7 @@ function output = readrosbag(self)
     clear adata_obj
     %% pid z
     adata_obj = PIDData();   
-    adata_obj.topicName="z_pid";
+    adata_obj.topicName=self.namespace+"z_pid";
     flag = adata_obj.readFromControl_PidState(self);
     if flag==1
         self.data_obj.z_pid = adata_obj;
@@ -288,7 +301,7 @@ function output = readrosbag(self)
     clear adata_obj
     %% pid th
     adata_obj = PIDData();   
-    adata_obj.topicName="th_pid";
+    adata_obj.topicName=self.namespace+"th_pid";
     flag = adata_obj.readFromControl_PidState(self);
     if flag==1
         self.data_obj.th_pid = adata_obj;

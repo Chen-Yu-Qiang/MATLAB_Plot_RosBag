@@ -37,8 +37,8 @@ function output = plot3axisWAng(self,plotobj,plogangobj)
         xlabel(plotobj(1).xlabel+"("+plotobj(1).xUnit+")")
     end
     ylabel("X("+plotobj(1).yUnit+")")
-    [~,Leg]=legend(legendlist,'Location','best')
-    objhl = findobj(Leg, 'type', 'line')
+    [~,Leg]=legend(legendlist,'Location','best');
+    objhl = findobj(Leg, 'type', 'line');
     set(objhl, 'Markersize', 15);
     grid on
     subplot(4,1,2)

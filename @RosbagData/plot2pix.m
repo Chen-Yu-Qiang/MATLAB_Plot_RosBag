@@ -28,8 +28,8 @@ function output = plot2pix(self,plotobj)
         xlabel(plotobj(1).xlabel+"("+plotobj(1).xUnit+")")
     end
     ylabel("Horizontal("+plotobj(1).yUnit+")")
-    [~,Leg]=legend(legendlist,'Location','best')
-    objhl = findobj(Leg, 'type', 'line')
+    [~,Leg]=legend(legendlist,'Location','best');
+    objhl = findobj(Leg, 'type', 'line');
     set(objhl, 'Markersize', 15);
     grid on
     ylim([0 960])
